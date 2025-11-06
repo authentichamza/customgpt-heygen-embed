@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ChatApp } from "@/components/chat/ChatApp";
 
-export default function EmbedPage() {
+function EmbedContent() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -66,5 +66,19 @@ export default function EmbedPage() {
         <ChatApp />
       </div>
     </div>
+  );
+}
+
+export default function EmbedPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="embed-shell">
+          <div className="embed-card" />
+        </div>
+      }
+    >
+      <EmbedContent />
+    </Suspense>
   );
 }
