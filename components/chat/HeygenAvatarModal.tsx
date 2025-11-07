@@ -88,7 +88,10 @@ export function HeygenAvatarModal({
       const { token } = (await tokenResponse.json()) as { token: string };
       const instance = new StreamingAvatar({ token });
 
-      instance.on(StreamingEvents.STREAM_READY, handleStreamReady as EventListener);
+      instance.on(
+        StreamingEvents.STREAM_READY,
+        handleStreamReady as EventListener
+      );
       instance.on(StreamingEvents.STREAM_DISCONNECTED, () => {
         if (videoRef.current) {
           videoRef.current.srcObject = null;
@@ -129,10 +132,9 @@ export function HeygenAvatarModal({
       "triggerAvatar",
       async ({ message }: { message: string }) => {
         try {
-          console.log('triggerAvatar', message)
           await avatarState.instance?.speak({ text: message });
         } catch (error) {
-          console.error("HeyGen speak failed", error);
+          console.error("Avatar speak failed", error);
         }
       }
     );
@@ -200,25 +202,17 @@ export function HeygenAvatarModal({
   return (
     <div className="modal-backdrop" onClick={handleBackgroundClick}>
       <div className="modal-card" onClick={handleCardClick}>
-        <header className="modal-header">
-          <div>
-            <h2 className="modal-title">HeyGen Avatar</h2>
-            <p className="modal-description">
-              Speak with the avatar to drive a CustomGPT conversation.
-            </p>
-          </div>
-          <button
-            type="button"
-            className="modal-close"
-            onClick={() => {
-              stopSession();
-              void stopAvatar().finally(onClose);
-            }}
-          >
-            ×
-          </button>
-        </header>
-        <div className="modal-body">
+        <button
+          type="button"
+          className="modal-close modal-close--floating"
+          onClick={() => {
+            stopSession();
+            void stopAvatar().finally(onClose);
+          }}
+        >
+          ×
+        </button>
+        <div className="modal-body modal-body--bare">
           {status && <p className="modal-status">{status}</p>}
           {modalContent}
         </div>

@@ -388,6 +388,20 @@ button {
   background: var(--chat-modal-body-bg);
 }
 
+.modal-body--bare {
+  padding: 0;
+  background: transparent;
+}
+
+.modal-close--floating {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  background: rgba(15, 23, 42, 0.75);
+  color: #f8fafc;
+}
+
 .modal-status {
   margin: 0 0 1rem;
   font-size: 0.9rem;
