@@ -86,6 +86,10 @@ body {
   flex-direction: column;
 }
 
+body.embed-mode {
+  background: transparent;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -138,8 +142,8 @@ button {
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-height: 480px;
-  max-height: calc(100vh - 320px);
+  min-height: auto;
+  max-height: none;
   padding: 1.5rem 2rem 0;
 }
 
@@ -459,34 +463,39 @@ button {
 
 .embed-shell {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: stretch;
-  padding: 1rem;
+  flex-direction: column;
+  background: transparent;
+  padding: 0;
+  flex: 1;
 }
 
 .embed-card {
   width: 100%;
-  max-width: 420px;
-  background-color: var(--chat-card-bg);
-  border: 1px solid var(--chat-embed-card-border);
-  border-radius: 1.5rem;
-  box-shadow: var(--chat-embed-card-shadow);
+  max-width: none;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  flex: 1;
+  min-height: 0;
 }
 
 .embed-card .chat-window {
-  max-height: none;
   flex: 1;
-  padding-bottom: 1rem;
+  padding: 0 0 1rem;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .embed-card .chat-footer {
   border-top: none;
-  box-shadow: var(--chat-footer-shadow);
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 @keyframes fade-in-up {

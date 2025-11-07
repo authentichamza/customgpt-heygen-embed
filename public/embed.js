@@ -75,18 +75,25 @@
 
     const container = document.createElement("div");
     container.style.boxSizing = "border-box";
-    container.style.width = scriptEl.getAttribute("data-width") || "100%";
-    container.style.maxWidth =
-      scriptEl.getAttribute("data-max-width") || "420px";
-    container.style.height = scriptEl.getAttribute("data-height") || "auto";
-    container.style.minHeight =
-      scriptEl.getAttribute("data-min-height") || "640px";
+    const parentRect = parent?.getBoundingClientRect?.();
+    const widthAttr = scriptEl.getAttribute("data-width");
+    const heightAttr = scriptEl.getAttribute("data-height");
+    const maxWidthAttr = scriptEl.getAttribute("data-max-width");
+    const minHeightAttr = scriptEl.getAttribute("data-min-height");
+
+    container.style.width =
+      widthAttr || (parentRect?.width ? `${parentRect.width}px` : "100%");
+    container.style.maxWidth = maxWidthAttr || "100%";
+    container.style.height =
+      heightAttr || (parentRect?.height ? `${parentRect.height}px` : "100%");
+    if (minHeightAttr) {
+      container.style.minHeight = minHeightAttr;
+    }
     container.style.borderRadius =
       scriptEl.getAttribute("data-border-radius") || "24px";
     container.style.overflow = "hidden";
-    container.style.boxShadow =
-      scriptEl.getAttribute("data-shadow") ||
-      "0 18px 38px rgba(2, 6, 23, 0.32)";
+    const shadowAttr = scriptEl.getAttribute("data-shadow");
+    container.style.boxShadow = shadowAttr || "none";
 
     const iframe = document.createElement("iframe");
     iframe.src = iframeUrl.toString();

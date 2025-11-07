@@ -9,6 +9,8 @@ function EmbedContent() {
 
   useEffect(() => {
     const root = document.documentElement;
+    document.body.classList.add("embed-mode");
+
     const themeParamMap: Record<string, string> = {
       bg: "--chat-body-bg",
       text: "--chat-text-color",
@@ -58,6 +60,10 @@ function EmbedContent() {
         root.style.setProperty(cssVar, value);
       }
     });
+
+    return () => {
+      document.body.classList.remove("embed-mode");
+    };
   }, [searchParams]);
 
   return (
