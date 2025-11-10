@@ -3,7 +3,6 @@
 import {
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
   type MouseEvent,
@@ -34,7 +33,9 @@ export function HeygenAvatarModal({
   registerFunction,
   status,
 }: HeygenAvatarModalProps) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
+  const localVideoRef = useRef<HTMLVideoElement | null>(null);
+  const localStreamRef = useRef<MediaStream | null>(null);
   const wasOpenRef = useRef(false);
   const [avatarState, setAvatarState] = useState<AvatarState>({
     instance: null,
@@ -42,6 +43,21 @@ export function HeygenAvatarModal({
   });
   const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLocalReady, setIsLocalReady] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
+
+  const releaseLocalStream = useCallback(() => {
+    if (localVideoRef.current) {
+      localVideoRef.current.srcObject = null;
+      localVideoRef.current.onloadedmetadata = null;
+    }
+
+    if (localStreamRef.current) {
+      localStreamRef.current.getTracks().forEach((track) => track.stop());
+      localStreamRef.current = null;
+    }
+    setIsLocalReady(false);
+  }, []);
 
   const stopAvatar = useCallback(async () => {
     const { instance } = avatarState;
@@ -52,8 +68,8 @@ export function HeygenAvatarModal({
     } catch (err) {
       console.error("Failed to stop HeyGen avatar session", err);
     } finally {
-      if (videoRef.current) {
-        videoRef.current.srcObject = null;
+      if (remoteVideoRef.current) {
+        remoteVideoRef.current.srcObject = null;
       }
       setAvatarState({ instance: null, session: null });
       setIsReady(false);
@@ -62,7 +78,7 @@ export function HeygenAvatarModal({
 
   const handleStreamReady = useCallback((event: Event) => {
     const mediaStream = (event as CustomEvent<MediaStream>).detail;
-    const element = videoRef.current;
+    const element = remoteVideoRef.current;
     if (!element) return;
 
     element.srcObject = mediaStream;
@@ -93,8 +109,8 @@ export function HeygenAvatarModal({
         handleStreamReady as EventListener
       );
       instance.on(StreamingEvents.STREAM_DISCONNECTED, () => {
-        if (videoRef.current) {
-          videoRef.current.srcObject = null;
+        if (remoteVideoRef.current) {
+          remoteVideoRef.current.srcObject = null;
         }
         setIsReady(false);
       });
@@ -152,39 +168,85 @@ export function HeygenAvatarModal({
   }, [open]);
 
   useEffect(() => {
+    if (!open) {
+      releaseLocalStream();
+      return;
+    }
+
+    let isCancelled = false;
+    const startCamera = async () => {
+      setLocalError(null);
+      setIsLocalReady(false);
+
+      if (
+        typeof navigator === "undefined" ||
+        !navigator.mediaDevices?.getUserMedia
+      ) {
+        setLocalError("Camera not supported in this browser.");
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+          audio: false,
+        });
+
+        if (isCancelled) {
+          stream.getTracks().forEach((track) => track.stop());
+          return;
+        }
+
+        localStreamRef.current = stream;
+        const videoElement = localVideoRef.current;
+        if (videoElement) {
+          videoElement.srcObject = stream;
+          videoElement.muted = true;
+          const playStream = () => {
+            videoElement
+              .play()
+              .then(() => setIsLocalReady(true))
+              .catch(() => setIsLocalReady(true));
+          };
+
+          if (
+            typeof HTMLMediaElement !== "undefined" &&
+            videoElement.readyState >= HTMLMediaElement.HAVE_METADATA
+          ) {
+            playStream();
+          } else {
+            videoElement.onloadedmetadata = playStream;
+          }
+        } else {
+          setIsLocalReady(true);
+        }
+      } catch (err) {
+        console.error("Failed to start local camera", err);
+        if (!isCancelled) {
+          setLocalError(
+            err instanceof Error
+              ? err.message
+              : "Unable to access front camera."
+          );
+        }
+      }
+    };
+
+    void startCamera();
+
+    return () => {
+      isCancelled = true;
+      releaseLocalStream();
+    };
+  }, [open]);
+
+  useEffect(() => {
     return () => {
       stopSession();
+      releaseLocalStream();
       void stopAvatar();
     };
   }, []);
-
-  const modalContent = useMemo(() => {
-    if (error) {
-      return (
-        <div className="avatar-state">
-          <p className="avatar-state__title">We could not start the avatar</p>
-          <p className="avatar-state__subtitle">{error}</p>
-        </div>
-      );
-    }
-
-    return (
-      <div className="avatar-video-wrapper">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          className={`avatar-video ${isReady ? "avatar-video--ready" : ""}`}
-        />
-        {!isReady && (
-          <div className="avatar-placeholder">
-            <div className="avatar-spinner" />
-            <span>Connecting to HeyGen…</span>
-          </div>
-        )}
-      </div>
-    );
-  }, [error, isReady]);
 
   if (!open) {
     return null;
@@ -192,6 +254,7 @@ export function HeygenAvatarModal({
 
   const handleBackgroundClick = () => {
     stopSession();
+    releaseLocalStream();
     void stopAvatar().finally(onClose);
   };
 
@@ -207,6 +270,7 @@ export function HeygenAvatarModal({
           className="modal-close modal-close--floating"
           onClick={() => {
             stopSession();
+            releaseLocalStream();
             void stopAvatar().finally(onClose);
           }}
         >
@@ -214,7 +278,62 @@ export function HeygenAvatarModal({
         </button>
         <div className="modal-body modal-body--bare">
           {status && <p className="modal-status">{status}</p>}
-          {modalContent}
+          <div className="avatar-split-layout">
+            <div className="video-panel">
+              <div className="video-panel__media">
+                <video
+                  ref={remoteVideoRef}
+                  autoPlay
+                  playsInline
+                  className={`avatar-video ${
+                    isReady ? "avatar-video--ready" : ""
+                  }`}
+                />
+                {error && (
+                  <div className="avatar-state video-panel__state">
+                    <p className="avatar-state__title">
+                      We could not start the avatar
+                    </p>
+                    <p className="avatar-state__subtitle">{error}</p>
+                  </div>
+                )}
+                {!error && !isReady && (
+                  <div className="avatar-placeholder">
+                    <div className="avatar-spinner" />
+                    <span>Connecting to HeyGen…</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="video-panel">
+              <div className="video-panel__media">
+                <video
+                  ref={localVideoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  className={`avatar-video avatar-video--local ${
+                    isLocalReady ? "avatar-video--ready" : ""
+                  }`}
+                />
+                {!isLocalReady && !localError && (
+                  <div className="avatar-placeholder">
+                    <div className="avatar-spinner" />
+                    <span>Starting camera…</span>
+                  </div>
+                )}
+                {localError && (
+                  <div className="avatar-state video-panel__state">
+                    <p className="avatar-state__title">
+                      Camera permission needed
+                    </p>
+                    <p className="avatar-state__subtitle">{localError}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

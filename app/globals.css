@@ -404,6 +404,7 @@ button {
 
 .modal-status {
   margin: 0 0 1rem;
+  padding: 1rem 1.25rem 0.25rem;
   font-size: 0.9rem;
   color: var(--chat-status-color);
 }
@@ -428,6 +429,61 @@ button {
 
 .avatar-video--ready {
   opacity: 1;
+}
+
+.avatar-video--local {
+  transform: scaleX(-1);
+}
+
+.avatar-split-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.video-panel {
+  flex: 1 1 320px;
+  display: flex;
+  align-items: stretch;
+  border-radius: 1rem;
+  border: 1px solid var(--chat-avatar-border);
+  background: var(--chat-avatar-bg);
+  overflow: hidden;
+  min-height: 260px;
+}
+
+.video-panel__media {
+  position: relative;
+  width: 100%;
+  background: var(--chat-avatar-placeholder-bg);
+  display: flex;
+  align-items: stretch;
+  aspect-ratio: 16 / 9;
+}
+
+.video-panel__media > video,
+.video-panel__media > .avatar-placeholder,
+.video-panel__media > .avatar-state {
+  position: absolute;
+  inset: 0;
+}
+
+.video-panel__state {
+  background: rgba(15, 23, 42, 0.85);
+  color: #f8fafc;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .avatar-split-layout {
+    flex-direction: column;
+  }
+
+  .video-panel {
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
 }
 
 .avatar-placeholder {
