@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -8,9 +8,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const primaryColor =
+    process.env.NEXT_PUBLIC_PRIMARY_COLOR?.trim() || "#050505";
+  const secondaryColor =
+    process.env.NEXT_PUBLIC_SECONDARY_COLOR?.trim() || "#f7f7f7";
+
+  const cssVariables: Record<string, string> = {
+    "--chat-primary-color": primaryColor,
+    "--chat-secondary-color": secondaryColor,
+  };
+
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body style={cssVariables as CSSProperties}>{children}</body>
     </html>
   );
 }

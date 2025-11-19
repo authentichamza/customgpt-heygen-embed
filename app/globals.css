@@ -3,67 +3,256 @@
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   background-color: #020817;
-  --chat-body-bg: radial-gradient(circle at top, #172554, #020617);
-  --chat-text-color: #f8fafc;
-  --chat-card-bg: rgba(15, 23, 42, 0.85);
-  --chat-card-border: rgba(148, 163, 184, 0.12);
-  --chat-header-border: rgba(148, 163, 184, 0.08);
-  --chat-subtitle-color: rgba(226, 232, 240, 0.75);
-  --chat-bubble-bg: rgba(30, 41, 59, 0.75);
-  --chat-bubble-border: rgba(148, 163, 184, 0.12);
-  --chat-user-bubble-bg: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.65),
-    rgba(14, 165, 233, 0.5)
+  --chat-primary-color: #050505;
+  --chat-secondary-color: #f7f7f7;
+  --chat-body-bg: radial-gradient(
+    circle at top,
+    color-mix(in srgb, var(--chat-secondary-color) 8%, var(--chat-primary-color) 92%),
+    color-mix(in srgb, var(--chat-primary-color) 96%, transparent)
   );
-  --chat-assistant-bubble-bg: rgba(30, 41, 59, 0.75);
-  --chat-meta-color: rgba(148, 163, 184, 0.75);
-  --chat-timestamp-color: rgba(148, 163, 184, 0.65);
-  --chat-input-bg: rgba(15, 23, 42, 0.9);
-  --chat-input-border: rgba(148, 163, 184, 0.16);
-  --chat-input-button-bg: rgba(30, 64, 175, 0.3);
-  --chat-input-button-hover-bg: rgba(37, 99, 235, 0.65);
-  --chat-input-button-disabled-bg: rgba(30, 41, 59, 0.7);
-  --chat-input-button-disabled-color: rgba(148, 163, 184, 0.6);
-  --chat-accent-color: rgba(59, 130, 246, 0.55);
+  --chat-text-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 92%,
+    var(--chat-primary-color) 8%
+  );
+  --chat-card-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 80%,
+    transparent
+  );
+  --chat-card-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 15%,
+    var(--chat-primary-color) 85%
+  );
+  --chat-header-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 10%,
+    var(--chat-primary-color) 90%
+  );
+  --chat-subtitle-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 70%,
+    var(--chat-primary-color) 30%
+  );
+  --chat-bubble-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 65%,
+    transparent
+  );
+  --chat-bubble-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 12%,
+    var(--chat-primary-color) 88%
+  );
+  --chat-user-bubble-bg: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 96%,
+    var(--chat-primary-color) 4%
+  );
+  --chat-assistant-bubble-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 70%,
+    transparent
+  );
+  --chat-user-text-color: color-mix(
+    in srgb,
+    var(--chat-primary-color) 97%,
+    var(--chat-secondary-color) 3%
+  );
+  --chat-assistant-text-color: var(--chat-text-color);
+  --chat-user-role-color: color-mix(
+    in srgb,
+    var(--chat-primary-color) 90%,
+    var(--chat-secondary-color) 10%
+  );
+  --chat-assistant-role-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 65%,
+    var(--chat-primary-color) 35%
+  );
+  --chat-meta-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 60%,
+    var(--chat-primary-color) 40%
+  );
+  --chat-timestamp-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 50%,
+    var(--chat-primary-color) 50%
+  );
+  --chat-input-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 85%,
+    transparent
+  );
+  --chat-input-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 18%,
+    var(--chat-primary-color) 82%
+  );
+  --chat-input-button-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 40%,
+    var(--chat-secondary-color) 60%
+  );
+  --chat-input-button-hover-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 60%,
+    var(--chat-secondary-color) 40%
+  );
+  --chat-input-button-disabled-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 65%,
+    transparent
+  );
+  --chat-input-button-disabled-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 40%,
+    var(--chat-primary-color) 60%
+  );
+  --chat-accent-color: color-mix(
+    in srgb,
+    var(--chat-primary-color) 80%,
+    var(--chat-secondary-color) 20%
+  );
   --chat-footer-bg: linear-gradient(
     180deg,
-    rgba(15, 23, 42, 0.9),
-    rgba(2, 6, 23, 0.9)
+    color-mix(
+      in srgb,
+      var(--chat-primary-color) 75%,
+      transparent
+    ),
+    color-mix(in srgb, var(--chat-primary-color) 95%, transparent)
   );
   --chat-error-color: rgb(248, 113, 113);
   --chat-status-color: rgb(56, 189, 248);
-  --chat-typing-dot-color: rgba(148, 163, 184, 0.8);
-  --chat-typing-dot-alt-color: rgba(148, 163, 184, 0.8);
-  --chat-avatar-border: rgba(148, 163, 184, 0.12);
-  --chat-avatar-bg: rgba(2, 6, 23, 0.6);
-  --chat-avatar-placeholder-bg: rgba(2, 6, 23, 0.65);
-  --chat-avatar-text-color: rgba(226, 232, 240, 0.85);
-  --chat-avatar-spinner-track: rgba(148, 163, 184, 0.4);
-  --chat-avatar-spinner-head: rgba(59, 130, 246, 0.9);
-  --chat-avatar-state-bg: rgba(2, 6, 23, 0.65);
-  --chat-avatar-state-border: rgba(248, 113, 113, 0.25);
-  --chat-modal-backdrop: rgba(2, 6, 23, 0.75);
-  --chat-placeholder-color: rgba(148, 163, 184, 0.6);
-  --chat-modal-card-bg: rgba(15, 23, 42, 0.95);
-  --chat-modal-card-border: rgba(148, 163, 184, 0.1);
-  --chat-modal-header-border: rgba(148, 163, 184, 0.08);
-  --chat-modal-close-bg: rgba(30, 41, 59, 0.65);
-  --chat-modal-close-color: #e2e8f0;
-  --chat-modal-close-hover-bg: rgba(59, 130, 246, 0.75);
-  --chat-modal-shadow: 0 25px 65px rgba(2, 6, 23, 0.5);
+  --chat-typing-dot-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 40%,
+    var(--chat-primary-color) 60%
+  );
+  --chat-typing-dot-alt-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 55%,
+    var(--chat-primary-color) 45%
+  );
+  --chat-avatar-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 10%,
+    var(--chat-primary-color) 90%
+  );
+  --chat-avatar-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 85%,
+    transparent
+  );
+  --chat-avatar-placeholder-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 80%,
+    transparent
+  );
+  --chat-avatar-text-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 90%,
+    var(--chat-primary-color) 10%
+  );
+  --chat-avatar-spinner-track: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 25%,
+    var(--chat-primary-color) 75%
+  );
+  --chat-avatar-spinner-head: color-mix(
+    in srgb,
+    var(--chat-primary-color) 85%,
+    var(--chat-secondary-color) 15%
+  );
+  --chat-avatar-state-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 75%,
+    transparent
+  );
+  --chat-avatar-state-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 30%,
+    var(--chat-primary-color) 70%
+  );
+  --chat-avatar-state-text: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 80%,
+    var(--chat-primary-color) 20%
+  );
+  --chat-modal-backdrop: color-mix(
+    in srgb,
+    var(--chat-primary-color) 80%,
+    transparent
+  );
+  --chat-placeholder-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 45%,
+    var(--chat-primary-color) 55%
+  );
+  --chat-modal-card-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 88%,
+    transparent
+  );
+  --chat-modal-card-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 20%,
+    var(--chat-primary-color) 80%
+  );
+  --chat-modal-header-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 14%,
+    var(--chat-primary-color) 86%
+  );
+  --chat-modal-close-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 65%,
+    transparent
+  );
+  --chat-modal-close-color: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 88%,
+    var(--chat-primary-color) 12%
+  );
+  --chat-modal-close-hover-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 80%,
+    var(--chat-secondary-color) 20%
+  );
+  --chat-modal-close-floating-bg: color-mix(
+    in srgb,
+    var(--chat-primary-color) 50%,
+    transparent
+  );
+  --chat-modal-close-floating-color: var(--chat-text-color);
+  --chat-modal-shadow: 0 25px 65px
+    color-mix(in srgb, var(--chat-primary-color) 50%, transparent);
   --chat-modal-body-bg: radial-gradient(
       circle at top right,
-      rgba(37, 99, 235, 0.18),
+      color-mix(
+        in srgb,
+        var(--chat-secondary-color) 20%,
+        var(--chat-primary-color) 80%
+      ),
       transparent
     ),
-    rgba(15, 23, 42, 0.92);
-  --chat-card-shadow: 0 20px 40px rgba(2, 6, 23, 0.35);
-  --chat-input-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.06);
-  --chat-footer-shadow: 0 -1px 0 rgba(15, 23, 42, 0.45);
-  --chat-embed-card-border: rgba(148, 163, 184, 0.18);
-  --chat-embed-card-shadow: 0 18px 38px rgba(2, 6, 23, 0.32);
-  --chat-avatar-state-text: rgba(248, 113, 113, 0.75);
+    color-mix(in srgb, var(--chat-primary-color) 90%, transparent);
+  --chat-card-shadow: 0 20px 40px
+    color-mix(in srgb, var(--chat-primary-color) 35%, transparent);
+  --chat-input-shadow: inset 0 1px 0
+    color-mix(in srgb, var(--chat-secondary-color) 12%, var(--chat-primary-color) 88%);
+  --chat-footer-shadow: 0 -1px 0
+    color-mix(in srgb, var(--chat-primary-color) 50%, transparent);
+  --chat-embed-card-border: color-mix(
+    in srgb,
+    var(--chat-secondary-color) 18%,
+    var(--chat-primary-color) 82%
+  );
+  --chat-embed-card-shadow: 0 18px 38px
+    color-mix(in srgb, var(--chat-primary-color) 30%, transparent);
 }
 
 *,
@@ -185,11 +374,27 @@ button {
   color: var(--chat-meta-color);
 }
 
+.chat-bubble--user .chat-bubble__role {
+  color: var(--chat-user-role-color, var(--chat-meta-color));
+}
+
+.chat-bubble--assistant .chat-bubble__role {
+  color: var(--chat-assistant-role-color, var(--chat-meta-color));
+}
+
 .chat-bubble__content {
   margin: 0;
   font-size: 0.98rem;
   line-height: 1.45rem;
   white-space: pre-wrap;
+}
+
+.chat-bubble--user .chat-bubble__content {
+  color: var(--chat-user-text-color, var(--chat-text-color));
+}
+
+.chat-bubble--assistant .chat-bubble__content {
+  color: var(--chat-assistant-text-color, var(--chat-text-color));
 }
 
 .chat-bubble__time {
@@ -398,8 +603,8 @@ button {
   top: 1rem;
   right: 1rem;
   z-index: 2;
-  background: rgba(15, 23, 42, 0.75);
-  color: #f8fafc;
+  background: var(--chat-modal-close-floating-bg);
+  color: var(--chat-modal-close-floating-color);
 }
 
 .modal-status {
@@ -470,8 +675,8 @@ button {
 }
 
 .video-panel__state {
-  background: rgba(15, 23, 42, 0.85);
-  color: #f8fafc;
+  background: var(--chat-avatar-state-bg);
+  color: var(--chat-avatar-state-text);
   justify-content: center;
 }
 

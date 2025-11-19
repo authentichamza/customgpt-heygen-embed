@@ -12,6 +12,8 @@ function EmbedContent() {
     document.body.classList.add("embed-mode");
 
     const themeParamMap: Record<string, string> = {
+      primary: "--chat-primary-color",
+      secondary: "--chat-secondary-color",
       bg: "--chat-body-bg",
       text: "--chat-text-color",
       card: "--chat-card-bg",
@@ -22,6 +24,10 @@ function EmbedContent() {
       bubbleborder: "--chat-bubble-border",
       user: "--chat-user-bubble-bg",
       assistant: "--chat-assistant-bubble-bg",
+      usertext: "--chat-user-text-color",
+      assistanttext: "--chat-assistant-text-color",
+      userrole: "--chat-user-role-color",
+      assistantrole: "--chat-assistant-role-color",
       meta: "--chat-meta-color",
       timestamp: "--chat-timestamp-color",
       input: "--chat-input-bg",
@@ -34,6 +40,8 @@ function EmbedContent() {
       footer: "--chat-footer-bg",
       error: "--chat-error-color",
       status: "--chat-status-color",
+      typingdot: "--chat-typing-dot-color",
+      typingdotalt: "--chat-typing-dot-alt-color",
       placeholder: "--chat-placeholder-color",
       modalbackdrop: "--chat-modal-backdrop",
       modalcard: "--chat-modal-card-bg",
@@ -42,8 +50,13 @@ function EmbedContent() {
       modalclose: "--chat-modal-close-bg",
       modalclosecolor: "--chat-modal-close-color",
       modalclosehover: "--chat-modal-close-hover-bg",
+      modalclosefloating: "--chat-modal-close-floating-bg",
+      modalclosefloatingcolor: "--chat-modal-close-floating-color",
       modalshadow: "--chat-modal-shadow",
       modalbody: "--chat-modal-body-bg",
+      cardshadow: "--chat-card-shadow",
+      inputshadow: "--chat-input-shadow",
+      footershadow: "--chat-footer-shadow",
       avatarborder: "--chat-avatar-border",
       avatarbg: "--chat-avatar-bg",
       avatarplaceholder: "--chat-avatar-placeholder-bg",
@@ -52,6 +65,9 @@ function EmbedContent() {
       avatarspinnerhead: "--chat-avatar-spinner-head",
       avatarstatebg: "--chat-avatar-state-bg",
       avatarstateborder: "--chat-avatar-state-border",
+      avatarstatetext: "--chat-avatar-state-text",
+      embedcardborder: "--chat-embed-card-border",
+      embedcardshadow: "--chat-embed-card-shadow",
     };
 
     Object.entries(themeParamMap).forEach(([param, cssVar]) => {

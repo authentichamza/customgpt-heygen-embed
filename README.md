@@ -38,8 +38,10 @@ Required values:
 | `OPENAI_API_KEY` | OpenAI API key with access to Realtime models (used for WebRTC audio). |
 | `NEXT_PUBLIC_HEYGEN_AVATAR_NAME` | (Optional) Default avatar name; fallback is `Ann_Therapist_public`. |
 | `NEXT_PUBLIC_HEYGEN_VOICE_ID` | (Optional) Default voice ID; fallback is `f8c69e517f424cafaecde32dde57096b`. |
+| `NEXT_PUBLIC_PRIMARY_COLOR` | (Optional) Primary accent/base color for gradients and controls; fallback is `#050505`. |
+| `NEXT_PUBLIC_SECONDARY_COLOR` | (Optional) Secondary accent/highlight color; fallback is `#f7f7f7`. |
 
-> The `NEXT_PUBLIC_` variables are exposed to the browser; customise them only if you want to switch the default avatar/voice.
+> The `NEXT_PUBLIC_` variables are exposed to the browser; customise them when you need different default avatar/voice options or want to change the base theme colours.
 
 ### 3. Run the dev server
 
@@ -80,6 +82,10 @@ Serve `public/embed.js` from your deployment and drop a script tag on any page:
 ```
 
 All `data-theme-*` attributes map to CSS variables exposed in `app/globals.css`. Use them to override background, bubble, input, modal, or avatar colors without rebuilding the widget. Width, max-width, min-height, border radius, and shadow can also be tweaked via `data-*` attributes on the script tag. If the script loads in `<head>`, the loader automatically appends the iframe to `<body>`.
+
+Set `data-theme-primary` and `data-theme-secondary` to control the two base colours that drive gradients, icons, and button styles—other `data-theme-*` overrides can then fine-tune individual surfaces if needed. Check `public/embed.js` for the complete list of supported hooks.
+
+Need separate text or label colours for user/assistant bubbles? Use `data-theme-user-text`, `data-theme-user-role`, `data-theme-assistant-text`, and `data-theme-assistant-role`.
 
 Visiting `/` now redirects to `/embed`, so the standalone chatbot is the default experience locally and in production.
 

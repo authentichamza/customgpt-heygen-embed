@@ -25,6 +25,8 @@
         );
 
     const themeAttributeMap = {
+      primary: "data-theme-primary",
+      secondary: "data-theme-secondary",
       bg: "data-theme-bg",
       text: "data-theme-text",
       card: "data-theme-card",
@@ -35,6 +37,10 @@
       bubbleborder: "data-theme-bubble-border",
       user: "data-theme-user",
       assistant: "data-theme-assistant",
+      usertext: "data-theme-user-text",
+      assistanttext: "data-theme-assistant-text",
+      userrole: "data-theme-user-role",
+      assistantrole: "data-theme-assistant-role",
       meta: "data-theme-meta",
       timestamp: "data-theme-timestamp",
       input: "data-theme-input",
@@ -47,6 +53,8 @@
       footer: "data-theme-footer",
       error: "data-theme-error",
       status: "data-theme-status",
+      typingdot: "data-theme-typing-dot",
+      typingdotalt: "data-theme-typing-dot-alt",
       placeholder: "data-theme-placeholder",
       modalbackdrop: "data-theme-modal-backdrop",
       modalcard: "data-theme-modal-card",
@@ -55,8 +63,13 @@
       modalclose: "data-theme-modal-close",
       modalclosecolor: "data-theme-modal-close-color",
       modalclosehover: "data-theme-modal-close-hover",
+      modalclosefloating: "data-theme-modal-close-floating",
+      modalclosefloatingcolor: "data-theme-modal-close-floating-color",
       modalshadow: "data-theme-modal-shadow",
       modalbody: "data-theme-modal-body",
+      cardshadow: "data-theme-card-shadow",
+      inputshadow: "data-theme-input-shadow",
+      footershadow: "data-theme-footer-shadow",
       avatarborder: "data-theme-avatar-border",
       avatarbg: "data-theme-avatar-bg",
       avatarplaceholder: "data-theme-avatar-placeholder",
@@ -65,6 +78,9 @@
       avatarspinnerhead: "data-theme-avatar-spinner-head",
       avatarstatebg: "data-theme-avatar-state-bg",
       avatarstateborder: "data-theme-avatar-state-border",
+      avatarstatetext: "data-theme-avatar-state-text",
+      embedcardborder: "data-theme-embed-card-border",
+      embedcardshadow: "data-theme-embed-card-shadow",
     };
 
     Object.entries(themeAttributeMap).forEach(([param, attr]) => {
