@@ -50,6 +50,7 @@ const SYSTEM_MESSAGE = `
 - Speak Faster
 
 # Critical Rules
+- First language to interpret user queries is ENGLISH.
 - NEVER start with get_additional_context
 - NEVER use internal knowledge
 - ONLY use get_additional_context as your knowledge base
@@ -158,7 +159,7 @@ export function useWebRTCAudioSession({
 
   useEffect(() => {
     functionRegistry.current["getAdditionalContext"] = handleGetAdditionalContext;
-  }, [handleGetAdditionalContext]);
+  }, []);
 
   const getEphemeralToken = useCallback(async () => {
     const response = await fetch("/api/session", {
@@ -401,6 +402,7 @@ export function useWebRTCAudioSession({
                   typeof msg.arguments === "string"
                     ? JSON.parse(msg.arguments)
                     : msg.arguments;
+                console.log("Function call:", msg.name, args);
                 const result = await fn(args);
                 console.log(result)
                 const functionResponse = {

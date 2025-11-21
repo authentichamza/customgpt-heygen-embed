@@ -11,6 +11,8 @@ import StreamingAvatar, {
   AvatarQuality,
   StreamingEvents,
   type StartAvatarResponse,
+  TaskMode,
+  TaskType,
 } from "@heygen/streaming-avatar";
 
 interface HeygenAvatarModalProps {
@@ -149,7 +151,7 @@ export function HeygenAvatarModal({
       async ({ message }: { message: string }) => {
         try {
           console.log("Avatar speaking:", message);
-          await avatarState.instance?.speak({ text: message });
+          await avatarState.instance?.speak({ text: message, task_type: TaskType.REPEAT, taskMode: TaskMode.ASYNC });
         } catch (error) {
           console.error("Avatar speak failed", error);
         }
