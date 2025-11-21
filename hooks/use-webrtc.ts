@@ -374,7 +374,6 @@ export function useWebRTCAudioSession({
           }
           case "response.done": {
             const responseOutput = msg.response?.output ?? [];
-            console.log('response.done output:', responseOutput)
             const messageItem = responseOutput.find(
               (item: any) => item.type === "message"
             );
@@ -382,7 +381,6 @@ export function useWebRTCAudioSession({
               messageItem?.content?.find(
                 (content: any) => content.type === "output_text"
               )?.text ?? messageItem?.content?.[0]?.text;
-            console.log('response.done message:', message)
 
             if (message) {
               finalizeAssistantResponse(message);
