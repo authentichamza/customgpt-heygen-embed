@@ -643,21 +643,20 @@ button {
 }
 
 .avatar-split-layout {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   padding: 1rem;
 }
 
 .video-panel {
-  flex: 1 1 320px;
   display: flex;
   align-items: stretch;
   border-radius: 1rem;
   border: 1px solid var(--chat-avatar-border);
   background: var(--chat-avatar-bg);
   overflow: hidden;
-  min-height: 260px;
+  min-height: 240px;
 }
 
 .video-panel__media {
@@ -680,17 +679,6 @@ button {
   background: var(--chat-avatar-state-bg);
   color: var(--chat-avatar-state-text);
   justify-content: center;
-}
-
-@media (max-width: 768px) {
-  .avatar-split-layout {
-    flex-direction: column;
-  }
-
-  .video-panel {
-    flex: 1 1 auto;
-    max-width: 100%;
-  }
 }
 
 .avatar-placeholder {
