@@ -116,9 +116,9 @@ export function HeygenAvatarModal({
       });
 
       const avatarName =
-        process.env.NEXT_PUBLIC_HEYGEN_AVATAR_NAME ?? "Ann_Therapist_public";
+        process.env.NEXT_PUBLIC_AVATAR_NAME ?? "Ann_Therapist_public";
       const voiceId =
-        process.env.NEXT_PUBLIC_HEYGEN_VOICE_ID ??
+        process.env.NEXT_PUBLIC_VOICE_ID ??
         "f8c69e517f424cafaecde32dde57096b";
 
       const session = await instance.createStartAvatar({
@@ -148,6 +148,7 @@ export function HeygenAvatarModal({
       "triggerAvatar",
       async ({ message }: { message: string }) => {
         try {
+          console.log("Avatar speaking:", message);
           await avatarState.instance?.speak({ text: message });
         } catch (error) {
           console.error("Avatar speak failed", error);
